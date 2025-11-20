@@ -1,0 +1,30 @@
+[server]
+# Port for PyWebDriver web interface
+port = 8085
+
+# Odoo server URL
+odoo_url = http://10.10.2.2:8069
+
+[station]
+# Station IP (this computer)
+ip = 10.10.2.1
+
+# Station hostname
+hostname = pos-station-1
+
+# Odoo database name
+database = pos_test
+
+[polling]
+# How often to poll for print jobs (seconds)
+queue_interval = 5
+
+# How often to send heartbeat (seconds)
+heartbeat_interval = 30
+
+# How often to check scale (seconds)
+scale_interval = 0.5
+
+[logging]
+level = INFO
+log_file = pywebdriver.log

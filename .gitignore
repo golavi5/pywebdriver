@@ -73,3 +73,6 @@ config/config.ini
 
 # Cert files
 *.pem
+
+# Version information
+=*

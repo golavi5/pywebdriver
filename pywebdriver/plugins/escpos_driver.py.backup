@@ -175,13 +175,7 @@ else:
                     kwargs["in_ep"] = printer.get("in_ep", 0x82)
                     kwargs["out_ep"] = printer.get("out_ep", 0x01)
                     kwargs["timeout"] = 0
-                    # Store USB params but don't open yet (lazy init to avoid resource busy)
-                    self._usb_vendor = idVendor
-                    self._usb_product = idProduct
-                    self._usb_kwargs = kwargs.copy()
-                    # Initialize parent without opening device
-                    object.__init__(self)
-                    self.device = None
+                    POSDriver.__init__(self, idVendor, idProduct, **kwargs)
                     self.open_args.append(usb_args)  # First open_arg is usb_args
             elif device_type == "serial":
                 kwargs["devfile"] = config.get("escpos_driver", "serial_device_name")
@@ -243,12 +237,7 @@ else:
             if self.device:
                 return
             try:
-                if device_type == "usb":
-                    # Lazy USB initialization - open device fresh each time
-                    from escpos.printer import Usb as POSDriver
-                    POSDriver.__init__(self, self._usb_vendor, self._usb_product, **self._usb_kwargs)
-                else:
-                    self.open(*self.open_args)
+                self.open(*self.open_args)
                 if device_type == "win32":
                     self.device = self.hPrinter
             except Exception as e:
